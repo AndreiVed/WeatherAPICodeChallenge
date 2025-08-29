@@ -22,23 +22,32 @@ def average_wind_der(wind_dir_list: list) -> str|None:
             return key
     return None
 
-def parse_data(location) -> dict:
+def get_response_data(location) -> dict:
     # get response data
     uri = f"{API_URL}?key={API_KEY}&q={location}&dt={DATE}&days=1&aqi=no&alerts=no"
     response_data = requests.get(uri).content.decode('utf-8')
-    response = json.loads(response_data)
+    return json.loads(response_data)
 
+def find_main_data(response) -> tuple:
     # find max and min temperature, humidity, wind speed into forecast day
+
     res_forecast = response["forecast"]["forecastday"][0]["day"]
     min_temp = res_forecast["mintemp_c"]
     max_temp = res_forecast["maxtemp_c"]
     humidity = res_forecast["avghumidity"]
     wind_speed = res_forecast["maxwind_kph"]
+    return min_temp, max_temp, humidity, wind_speed
 
-    #find the wind direction by the largest direction for the day
+def find_largest_wind_direction(response):
+    # find the wind direction by the largest direction for the day
     res_hour = response["forecast"]["forecastday"][0]["hour"]
     wind_dir_list = [hour["wind_dir"] for hour in res_hour]
-    wind_dir = average_wind_der(wind_dir_list)
+    return average_wind_der(wind_dir_list)
+
+def parse_data(location) -> dict:
+    response = get_response_data(location)
+    min_temp, max_temp, humidity, wind_speed = find_main_data(response)
+    wind_dir = find_largest_wind_direction(response)
 
     return {
         "Minimum Temperature (°C)": min_temp,
