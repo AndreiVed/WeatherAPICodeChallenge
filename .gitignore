@@ -2,3 +2,5 @@
 .idea
 .env
 response_ex.json
+__pycache__/
+.pyc
