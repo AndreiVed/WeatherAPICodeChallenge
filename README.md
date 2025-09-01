@@ -27,8 +27,31 @@ your account dashboard. This key is a unique identifier that authenticates your 
 3. Explore the API Documentation: The best way to understand the API is by using their
 interactive documentation, specifically the Swagger tool. This tool allows you to test
 different endpoints, see the required parameters, and view example JSON responses. This
-will be very helpful in structuring your application's data models. Bonus Points
+will be very helpful in structuring your application's data models.
+
+Bonus Points:
 
 - Writing the app in Kotlin. 
 - Using Gradle as a package manager.
 - Using Retrofit (https://square.github.io/retrofit/) for API interaction.
+
+
+## Getting Started
+
+To run this application, 
+you need to provide a valid API key from WeatherAPI.com.
+
+### 1. Local deployment:
+- Create venv: `python -m venv .venv`
+- Activate venv: `source .venv/bin/activate`
+- Install requirements: `pip install requirements.txt`
+- Create a .env file and set your API_KEY from WeatherAPI.com
+or use mine:
+`API_KEY=9ca70da4e3254418b49172244252808`
+- Run `python main.py`
+
+### 2. Using Docker:
+- Build the Docker image from the Dockerfile: `docker build -t weather_api .`
+- Run the container by passing your API key 
+as an environment variable using the -e flag:
+`docker run -e "API_KEY=your_weather_api_key" weather_api`
