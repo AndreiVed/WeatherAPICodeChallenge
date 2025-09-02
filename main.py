@@ -45,14 +45,9 @@ def get_response_data(location: str) -> dict:
         response_data.raise_for_status()
         decoded_data = response_data.content.decode()
         return json.loads(decoded_data)
-    except requests.exceptions.HTTPError as http_e:
-        print(f"HTTP error occurred: {http_e} for location {location}")
-    except requests.exceptions.RequestException as req_e:
-        print(f"An error occurred while fetching data: {req_e} "
-              f"for location {location}")
-    except requests.exceptions.JSONDecodeError as json_e:
-        print(f"JSON decoding error: {json_e} "
-              f"from response for location {location}")
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e} for location {location}")
     return {}
 
 
@@ -65,26 +60,12 @@ def find_main_data(response: dict) -> tuple:
     except (KeyError, ValueError) as e:
         print(f"Error parsing forecast data: Missing key {e}")
         return "N/A", "N/A", "N/A", "N/A"
-    try:
-        min_temp = res_forecast["mintemp_c"]
-    except (KeyError, ValueError) as e:
-        print(f"Error parsing forecast data: Missing key {e}")
-        min_temp = "N/A"
-    try:
-        max_temp = res_forecast["maxtemp_c"]
-    except (KeyError, ValueError) as e:
-        print(f"Error parsing forecast data: Missing key {e}")
-        max_temp = "N/A"
-    try:
-        humidity = res_forecast["avghumidity"]
-    except (KeyError, ValueError) as e:
-        print(f"Error parsing forecast data: Missing key {e}")
-        humidity = "N/A"
-    try:
-        wind_speed = res_forecast["maxwind_kph"]
-    except (KeyError, ValueError) as e:
-        print(f"Error parsing forecast data: Missing key {e}")
-        wind_speed = "N/A"
+
+    min_temp = res_forecast.get("mintemp_c", "N/A")
+    max_temp = res_forecast.get("maxtemp_c", "N/A")
+    humidity = res_forecast.get("avghumidity", "N/A")
+    wind_speed = res_forecast.get("maxwind_kph", "N/A")
+
     return min_temp, max_temp, humidity, wind_speed
 
 
