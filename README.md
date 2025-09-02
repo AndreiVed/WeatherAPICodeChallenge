@@ -80,7 +80,7 @@ and gives instructions on how to set it up and run it, both locally and with Doc
 
 To run this application:
 * Python 3.12 must already be installed.
-* You need to provide a valid API key from WeatherAPI.com.
+* You need to provide a valid API key from WeatherAPI.com (https://www.weatherapi.com/).
 
 ### 1. Local deployment:
 - Create venv: `python -m venv .venv`
@@ -92,7 +92,10 @@ or use mine:
 - Run `python main.py`
 
 ### 2. Using Docker:
-- Build the Docker image from the Dockerfile: `docker build -t weather_api .`
+- Build the Docker image from the Dockerfile:  
+`docker build -t weather_api .`
 - Run the container by passing your API key 
-as an environment variable using the -e flag:
+as an environment variable using the -e flag:  
 `docker run -e "API_KEY=your_weather_api_key" weather_api`
+
+*Remember to replace `your_weather_api_key` with your actual key.*
