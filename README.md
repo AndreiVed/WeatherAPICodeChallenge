@@ -78,8 +78,9 @@ and gives instructions on how to set it up and run it, both locally and with Doc
 
 ## Getting Started
 
-To run this application, 
-you need to provide a valid API key from WeatherAPI.com.
+To run this application:
+* Python 3.12 must already be installed.
+* You need to provide a valid API key from WeatherAPI.com.
 
 ### 1. Local deployment:
 - Create venv: `python -m venv .venv`
